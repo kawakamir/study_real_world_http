@@ -5,18 +5,16 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"net/http/httputil"
 	"io/ioutil"
 	"github.com/k0kubun/pp"
 )
 func handler(w http.ResponseWriter, r *http.Request){
-	dump, err := httputil.DumpRequest(r, true)
-	if err != nil {
-		http.Error(w, fmt.Sprint(err), http.StatusInternalServerError)
-		return
+	w.Header().Add("Set-Cookie", "VISIT=TRUE")
+	if _, ok := r.Header["Cookie"]; ok {
+		fmt.Fprintf(w, "<html><body>2回目以降</body></html>\n")
+	} else {
+		fmt.Fprintf(w, "<html><body>初訪問</body></html>\n")
 	}
-	fmt.Println(string(dump))
-	fmt.Fprintf(w, "<html><body>hello</body></html>\n")
 }
 
 
