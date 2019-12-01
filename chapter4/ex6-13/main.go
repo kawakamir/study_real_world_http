@@ -3,7 +3,6 @@ package main
 import (
 	"time"
 	"io"
-	"crypto/tls"
 	"fmt"
 	"log"
 	"net/http"
@@ -47,16 +46,9 @@ func handlerUpgrade(w http.ResponseWriter, r *http.Request) {
 
 
 func main() {
-	server := &http.Server{
-		TLSConfig: &tls.Config{
-			// ClientAuth: tls.RequireAndVerifyClientCert,
-			ClientAuth: tls.NoClientCert,
-			MinVersion: tls.VersionTLS12,
-		},
-		Addr: ":18888",
-	}
+	var httpServer http.Server
 	http.HandleFunc("/", handlerUpgrade)
 	log.Println("start http listening :18888")
-	info := server.ListenAndServeTLS("server.crt", "server.key")
-	log.Println(info)
+	httpServer.Addr = ":18888"
+	log.Println(httpServer.ListenAndServe())
 }
