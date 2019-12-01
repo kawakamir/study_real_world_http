@@ -13,3 +13,7 @@
 
 # other
 *.DS_Store
+
+*.crt
+*.csr
+*.key
