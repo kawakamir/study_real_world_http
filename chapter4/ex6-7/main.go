@@ -10,7 +10,7 @@ import (
 )
 
 func main()  {
-	cert, err := ioutil.ReadFile("../ca.crt")
+	cert, err := ioutil.ReadFile("ca.crt")
 	if err != nil {
 		panic(err)
 	}
